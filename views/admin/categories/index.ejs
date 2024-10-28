@@ -1,0 +1,51 @@
+<%- include('../../partials/head', { title: 'all categories' }) %>
+<%- include('../../partials/navbar') %>
+
+<div class="container">
+  <hr>
+  <div class="d-flex justify-content-between align-items-center">
+    <h2>Categorias</h2>
+    <a class="btn btn-success" href="/admin/categories/new">Criar nova categoria</a>
+  </div>
+  <hr>
+  <table class="table table-striped align-middle">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Título</th>
+        <th>Slug</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% categories.forEach(category => { %>
+      <tr>
+        <th scope="row"><%= category.id %></th>
+        <td><%= category.title %></td>
+        <td><%= category.slug %></td>
+        <td class="">
+          <a class="btn btn-warning" href="/admin/categories/edit/<%= category.id %>">Edit</a>
+
+          <form action="/categories/delete" method="post" style="display: inline;" onsubmit="confirmDelete(event, this)">
+            <input type="hidden" name="id" value="<%= category.id %>">
+            <button class="btn btn-danger">Delete</button>
+          </form>
+        </td>
+      </tr>
+      <% }); %>
+    </tbody>
+  </table>
+</div>
+
+<%- include('../../partials/foot') %>
+
+<script>
+  function confirmDelete(event, form) {
+    event.preventDefault()
+    console.log('entrou aqui!');
+    const decision = confirm('Você quer deletar esta categoria?')
+    if (decision) {
+      form.submit()
+    }
+  }
+</script>
