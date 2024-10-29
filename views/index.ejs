@@ -7,7 +7,7 @@
       <h5 class="card-title">BlogPress</h5>
       <p class="card-text">Este é um simple blog, que usa a biblioteca de classe CSS para o visual.</p>
       <p class="card-text">O intuito é não perder tempo com visual para aprender melhor como trabalhar com o Node, Express e Sequelize.</p>
-      <hr class="">
+      <hr>
       <a href="#" class="btn btn-primary">Leia Mais</a>
     </div>
   </div>
@@ -18,7 +18,7 @@
         <%= article.title %>
       </div>
       <div class="card-body">
-        <a href="#  " class="btn btn-success">Ler Artigo</a>
+        <a href="/<%= article.slug %>" class="btn btn-success">Ler Artigo</a>
       </div>
     </div>
   <% }); %>
