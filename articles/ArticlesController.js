@@ -1,12 +1,55 @@
 const express = require('express')
-const router = express.Router();
+const slugify = require('slugify')
+const router = express.Router()
 
-router.get('/articles', (req, res) => {
-  res.send('rota de articles')
+const Category = require('../categories/Category')
+const Article = require('../articles/Article')
+
+router.get('/admin/articles', (req, res) => {
+  Article.findAll({
+    include: [{ model: Category }]
+  }).then(articles => {
+    res.render('admin/articles/index', { articles })
+  })
 })
 
 router.get('/admin/articles/new', (req, res) => {
-  res.send('rota para criar uma novo artigo')
+  Category.findAll()
+    .then(categories => {
+      res.render('admin/articles/new', { categories })
+    })
+})
+
+router.post('/articles/save', (req, res) => {
+  const title = req.body.title
+  const body = req.body.body
+  const categoryId = req.body.category
+
+  Article.create({
+    title: title,
+    slug: slugify(title),
+    body: body,
+    categoryId: categoryId
+  }).then(() => {
+    res.redirect('/admin/articles')
+  })
+})
+
+router.post('/articles/delete', (req, res) => {
+  const id = req.body.id
+  if (id !== undefined) {
+    if (!isNaN(id)) {
+      Article.destroy({
+        where: {
+          id: id
+        }
+      }).then(() => res.redirect('/admin/articles'))
+    } else {
+      res.redirect('/admin/articles')
+    }
+  } else {
+    res.redirect('/admin/articles')
+  }
 })
 
 module.exports = router

@@ -1,4 +1,4 @@
-<%- include('../../partials/head', { title: 'all categories' }) %>
+<%- include('../../partials/head', { title: 'Categorias' }) %>
 <%- include('../../partials/navbar') %>
 
 <div class="container">
@@ -23,9 +23,8 @@
         <th scope="row"><%= category.id %></th>
         <td><%= category.title %></td>
         <td><%= category.slug %></td>
-        <td class="">
+        <td>
           <a class="btn btn-warning" href="/admin/categories/edit/<%= category.id %>">Edit</a>
-
           <form action="/categories/delete" method="post" style="display: inline;" onsubmit="confirmDelete(event, this)">
             <input type="hidden" name="id" value="<%= category.id %>">
             <button class="btn btn-danger">Delete</button>
