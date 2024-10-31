@@ -1,0 +1,32 @@
+<%- include('../../partials/head', { title: 'Blog Press' }) %>
+<%- include('../../partials/home-navbar') %>
+
+<div class="container"> 
+  <hr>
+  <% result.articles.rows.forEach(article => { %>
+    <div class="card mt-3">
+      <div class="card-header">
+        <%= article.title %>
+      </div>
+      <div class="card-body">
+        <a href="/<%= article.slug %>" class="btn btn-success">Ler Artigo</a>
+      </div>
+    </div>
+  <% }); %>
+
+  <div class="row">
+    <div class="col col-12 mt-3" style="text-align: center;">
+      <% if (result.page > 1) { %>
+        <a href="/articles/page/<%= result.page - 1 %>">&laquo; Prev</a>
+      <% } %>
+      &nbsp;
+      <% if (result.next) { %>
+        <a href="/articles/page/<%= result.page + 1 %>">Next &raquo;</a>
+      <% } %>
+    </div>
+  </div>
+  <hr>
+
+</div>
+
+<%- include('../../partials/foot.ejs') %>

@@ -1,0 +1,6 @@
+.textbox{
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 360px;
+}
