@@ -1,0 +1,38 @@
+<%- include('../../partials/head', { title: 'Listagem de Usuários' }) %>
+<%- include('../../partials/navbar') %>
+
+<div class="container">
+  <hr>
+  <div class="d-flex justify-content-between align-items-center">
+    <h2>Usuários</h2>
+    <a class="btn btn-success" href="/admin/categories/create">Novo Usuário</a>
+  </div>
+  <hr>
+  <table class="table table-striped align-middle">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Email</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% users.forEach(user => { %>
+      <tr>
+        <th scope="row" class="col-xs-1"><%= user.id %></th>
+        <td class="col-xl-10"><%= user.email %></td><td>
+          <div class="g-grid">
+            <a class="btn btn-warning" href="/admin/categories/edit/<%= user.id %>">Edit</a>
+            <form action="/categories/delete" method="post" style="display: inline;" onsubmit="confirmDelete(event, this)">
+              <input type="hidden" name="id" value="<%= user.id %>">
+              <button class="btn btn-danger">Delete</button>
+            </form>
+          </div>
+        </td>
+      </tr>
+      <% }); %>
+    </tbody>
+  </table>
+</div>
+
+<%- include('../../partials/foot') %>

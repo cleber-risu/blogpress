@@ -5,7 +5,9 @@ const router = express.Router()
 const Category = require('../categories/Category')
 const Article = require('../articles/Article')
 
-router.get('/admin/articles', (req, res) => {
+const adminAuth = require('../middlewares/AdminAuth')
+
+router.get('/admin/articles', adminAuth, (_, res) => {
   Article.findAll({
     include: [{ model: Category }]
   }).then(articles => {
@@ -13,7 +15,7 @@ router.get('/admin/articles', (req, res) => {
   })
 })
 
-router.get('/admin/articles/new', (req, res) => {
+router.get('/admin/articles/new', adminAuth, (_, res) => {
   Category.findAll()
     .then(categories => {
       res.render('admin/articles/new', { categories })
@@ -102,7 +104,7 @@ router.get('/articles/page/:num', (req, res) => {
   if (isNaN(page) || page == 1) {
     offset = 1
   } else {
-    offset = parseInt(page) * pageSize
+    offset = (parseInt(page) - 1) * pageSize
   }
 
   // retorna todos os artigos e tambem a quantidade
